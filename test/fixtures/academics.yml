@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  college_name: MyString
+  career_goals: MyString
+  known_languages: MyString
+  other_languages: MyString
+  currently_working: false
+  specialization: MyString
+  total_experience: MyString
+  availability: false
+
+two:
+  college_name: MyString
+  career_goals: MyString
+  known_languages: MyString
+  other_languages: MyString
+  currently_working: false
+  specialization: MyString
+  total_experience: MyString
+  availability: false
