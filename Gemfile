@@ -80,3 +80,8 @@ gem "sassc"
 
 gem "fast_jsonapi"
 gem "active_model_serializers"
+gem "csv"
+gem "kaminari"
+gem 'mail'
+gem 'email_validator'
+

@@ -103,6 +103,7 @@ GEM
       activesupport
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    csv (3.2.7)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -125,6 +126,8 @@ GEM
     dry-core (1.0.0)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
+    email_validator (2.2.4)
+      activemodel
     erubi (1.12.0)
     faraday (2.7.9)
       faraday-net_http (>= 2.0, < 3.1)
@@ -315,12 +318,16 @@ DEPENDENCIES
   activeadmin
   bootsnap
   capybara
+  csv
   debug
   devise
   devise-jwt
+  email_validator
   fast_jsonapi
   importmap-rails
   jbuilder
+  kaminari
+  mail
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.6)

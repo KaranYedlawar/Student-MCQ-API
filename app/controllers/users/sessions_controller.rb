@@ -5,12 +5,15 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(user, options={})
+
     if user.valid_password?(params[:user][:password]) && user.academic_status == true && user.otp_verified == true
       sign_in user
+      token = request.env['warden-jwt_auth.token']
       user.update(login_status: true)
       render json:{
       status:{ code:200, message:"User signed in successfully",
-      data: current_user}
+      data: current_user},
+      token: token
         }, status: :ok
     else
       render json: {

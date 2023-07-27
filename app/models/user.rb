@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_one :academic
+  has_one :academic, dependent: :destroy
   
   include Devise::JWT::RevocationStrategies::JTIMatcher
   # Include default devise modules. Others available are:

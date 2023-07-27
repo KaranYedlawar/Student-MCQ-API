@@ -1,0 +1,7 @@
+<%= form_for @interest, url: import_csv_admin_interests_path, method: :post, html: { multipart: true } do |f| %>
+    <div class="field">
+      <%= label_tag :csv_file, 'CSV File' %>
+      <%= f.file_field :csv_file, accept: '.csv' %>
+    </div>
+<%= f.submit 'Import CSV' %>
+<% end %>

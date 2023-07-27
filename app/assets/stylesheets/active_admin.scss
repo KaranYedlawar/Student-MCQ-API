@@ -15,3 +15,19 @@
 // For example, to change the default status-tag color:
 //
 //   .status_tag { background: #6090DB; }
+
+/* Banner style for 'notice' messages */
+.flash.notice {
+    background-color: #4caf50; /* Green color for success message */
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+/* Banner style for 'alert' messages */
+.flash.alert {
+    background-color: #ff9800; /* Orange color for skipped question message */
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+  }

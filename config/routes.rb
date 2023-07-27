@@ -21,11 +21,18 @@ Rails.application.routes.draw do
   get 'academics', to: 'academics#index'
   post 'createacademics', to: 'academics#create'
 
+  get 'getallquestion', to: 'questions#index'
   get 'getquestion', to: 'questions#condition_based_question'
   post 'createquestion', to: 'questions#create'
   post 'submitanswer', to: 'questions#submit_ans'
 
   get 'getoption', to: 'options#index'
   post 'createoption', to: 'options#create'
+
+  # resources :questions do
+  #   member do
+  #     post 'send_result_email'
+  #   end
+  # end
 
 end
