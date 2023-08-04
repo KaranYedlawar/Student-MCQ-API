@@ -20,7 +20,7 @@ class QuestionsController < ApplicationController
     end
 
     def create
-        if current_user.admin?
+        if current_user.admin? || current_user.role == 'admin' || current_user.role == 'teacher'
             question = Question.create(question_params)
             if question.save
                 render json:{
@@ -28,33 +28,37 @@ class QuestionsController < ApplicationController
                     question:question
                 }, status: :created
             else
-                render json:{
-                    message: "Unable to create question, check details again!",
-                    error: question.errors.full_messages
-                }, status: 422
+                render json: {
+                  message: "Unable to create question, check details again!",
+                  error: question.errors.full_messages
+                }, status: :unprocessable_entity
             end
+        else
+            render json: {
+            message: "Only admin can create a question!"
+            }, status: :unauthorized
         end
     end
 
     def update
-        if current_user.admin?
-            question = set_question
-            if question.update(question_params)
-                render json:{
-                message: "Question Updated Successfully",
-                question: question
-                }, status: :ok
-            else
-                render json: {
-                message: "Question unable to update",
-                error: user.errors.full_messages
-                }, status: 422
-            end
+      if current_user.admin?
+        question = set_question
+        if question.update(question_params)
+          render json: {
+            message: "Question Updated Successfully",
+            question: question
+          }, status: :ok
         else
-            render json:{
-                message: "Only admin can update it!"
-            }, status: 401
+          render json: {
+            message: "Question unable to update",
+            error: question.errors.full_messages
+          }, status: 422
         end
+      else
+        render json: {
+          message: "Only admin can update it!"
+        }, status: 401
+      end
     end
 
     def condition_based_question
@@ -97,70 +101,6 @@ class QuestionsController < ApplicationController
             }, status: 401
         end
     end
-     
-
-    # def submit_ans
-    #     token = request.headers['token']&.split&.last
-    #     if token
-    #       payload = JWT.decode(token, nil, false).first
-    #       if payload.present? && payload['exp'] >= Time.now.to_i
-    #         current_user = User.find_by(id: payload['sub'])
-    #         if current_user.login_status == true
-    #           if current_user.role == "student"
-    #             answer = params[:Answers]
-    #             total_questions = answer.length
-    #             correct_ans = 0
-    
-    #             answer.each do |answer|
-    #               question = Question.find(answer[:question_id])
-    #               users_choice = Option.find(answer[:choice]) if answer[:choice].present?
-    #               if users_choice.present? && users_choice.choice == question.correct_answer
-    #                 correct_ans += 1
-    #               end
-    #             end
-    #             score = (correct_ans.to_f / total_questions.to_f) * 100
-    #             score_percentage = "#{score} %"
-    #             ResultMailer.result_email(current_user, score).deliver_now
-    #             render json: {
-    #               message: "Results sent on your Email-ID successfully!",
-    #               score: score_percentage,
-    #               correct_answer: correct_ans,
-    #               total_questions: total_questions
-    #             }
-    #           else
-    #             render json: {
-    #               message: "Invalid user, permission denied."
-    #             }
-    #           end
-    #         else
-    #           render json: {
-    #             message: "User must login to submit the answers."
-    #           }, status: 401
-    #         end
-    #       end
-    #     else
-    #       render json: {
-    #         message: "Invalid Token"
-    #       }, status: 401
-    #     end
-    # end
-    
-    # def send_result_email
-    #     token = request.headers['token']&.split&.last
-    #     if token
-    #       payload = JWT.decode(token, nil, false).first
-    #       if payload.present? && payload['exp'] >= Time.now.to_i
-    #         current_user = User.find_by(id: payload['sub'])
-    #         score = params[:score].to_f 
-    #         if score.present?
-    #           ResultMailer.result_email(current_user, score).deliver_now
-    #           render json: { message: "Result email sent successfully!" }
-    #         else
-    #           render json: { message: "Score is missing or invalid. Please provide a valid score." }, status: 400
-    #         end
-    #       end
-    #     end
-    # end
 
     def submit_ans
         token = request.headers['token']&.split&.last

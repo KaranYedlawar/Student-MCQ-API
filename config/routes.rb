@@ -6,11 +6,15 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  post 'verifyotp', to:'accounts#sms_confirm'
+  resources :users, only: [:create]
+  resources :questions, only: [:index, :create, :update]
 
-  # post "createprofile", to: "users#create"
+
+  post 'verifyotp', to:'accounts#sms_confirm' 
+
   get 'users', to: 'users#index'
-  # delete "deleteprofile", to: "users#destroy"
+  get 'showUser', to: 'users#show'
+  delete "deleteUser/:id", to: "users#destroy"
 
   get 'interests', to: 'interests#index'
   post 'createinterests', to: 'interests#create'
@@ -28,11 +32,5 @@ Rails.application.routes.draw do
 
   get 'getoption', to: 'options#index'
   post 'createoption', to: 'options#create'
-
-  # resources :questions do
-  #   member do
-  #     post 'send_result_email'
-  #   end
-  # end
 
 end
